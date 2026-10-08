@@ -75,5 +75,6 @@ export function sparkline(series, colors, w = 220, h = 44) {
   const X = (t) => 2 + ((t - t0) / Math.max(t1 - t0, 1)) * (w - 4), Y = (p) => h - 2 - ((p - lo) / (hi - lo)) * (h - 4);
   const lines = Object.entries(series).map(([v, s]) =>
     `<path d="${s.map((p, i) => `${i ? "L" : "M"}${X(new Date(p[0]).getTime()).toFixed(1)},${Y(p[1]).toFixed(1)}`).join("")}" fill="none" stroke="${colors[v] || "var(--ink-3)"}" stroke-width="2"><title>${esc(v)}</title></path>`).join("");
-  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="price moves">${lines}</svg>`;
+  return `<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" aria-label="price moves">${lines}</svg>
+    <span class="small muted">${pct(lo + 0.01, 0)}–${pct(hi - 0.01, 0)}</span>`;
 }

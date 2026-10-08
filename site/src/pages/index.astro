@@ -28,7 +28,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     const games = data.model?.games ?? [];
     el.innerHTML = games.length ? games.map((g) => gameCard({ ...g, early_label_games: data.model.early_label_games },
       data.polymarket, data.consensus)).join("") : `<p class="muted">No games scheduled.</p>`;
-    document.getElementById("refreshed").textContent = data.model?.generated_at ? `Model run ${etTime(data.model.generated_at)}.` : "";
+    document.getElementById("refreshed").textContent = data.model?.generated_at ? ` Model run ${etTime(data.model.generated_at)}.` : "";
+    if (data.model?.date) document.getElementById("day").textContent = new Date(data.model.date + "T12:00:00Z")
+      .toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric", year: "numeric" });
   };
   render();
   const refresh = async () => {
