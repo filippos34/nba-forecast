@@ -1,0 +1,55 @@
+{
+ "generated_at": "2026-10-08T12:19:55+00:00",
+ "date": "2026-10-20",
+ "early_label_games": 10,
+ "games": [
+  {
+   "game_id": 401909088,
+   "tip_utc": "2026-10-20T19:00:00Z",
+   "home": "DET",
+   "away": "BOS",
+   "neutral": false,
+   "model_p_home": 0.481,
+   "model_spread_home": 0.6,
+   "model_as_of": "2026-10-08T12:19:55+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 0,
+   "away_games": 0,
+   "early_estimate": true,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909089,
+   "tip_utc": "2026-10-20T23:00:00Z",
+   "home": "NY",
+   "away": "PHI",
+   "neutral": false,
+   "model_p_home": 0.5335,
+   "model_spread_home": -1.1,
+   "model_as_of": "2026-10-08T12:19:55+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 0,
+   "away_games": 0,
+   "early_estimate": true,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909090,
+   "tip_utc": "2026-10-21T01:30:00Z",
+   "home": "SA",
+   "away": "OKC",
+   "neutral": false,
+   "model_p_home": 0.5759,
+   "model_spread_home": -2.6,
+   "model_as_of": "2026-10-08T12:19:55+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 0,
+   "away_games": 0,
+   "early_estimate": true,
+   "pre_report": true
+  }
+ ]
+}
