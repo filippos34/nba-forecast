@@ -4,9 +4,8 @@ name: live
 on:
   schedule:
     - cron: "17 * * * *"
-  push:
-    branches: [gh-pages, live-data]
-  workflow_dispatch:
+  workflow_dispatch:          # the maintainer's machine dispatches this after pushing gh-pages / live-data
+                              # (a push trigger would read the workflow from those branches, which have none)
 permissions:
   contents: read
   pages: write
