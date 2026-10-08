@@ -1,0 +1,17 @@
+name: probe-polymarket
+on:
+  workflow_dispatch:
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Gamma + CLOB from a GitHub runner
+        run: |
+          set -u
+          echo "runner IP country: $(curl -s https://ipinfo.io/country)"
+          code=$(curl -s -o gamma.json -w '%{http_code}' 'https://gamma-api.polymarket.com/events?tag_slug=nba&active=true&closed=false&limit=5')
+          echo "gamma HTTP $code, $(wc -c < gamma.json) bytes"
+          tok=$(python3 -c "import json; e=json.load(open('gamma.json')); print(json.loads(e[0]['markets'][0]['clobTokenIds'])[0])")
+          code=$(curl -s -o books.json -w '%{http_code}' -X POST https://clob.polymarket.com/books -H 'Content-Type: application/json' -d "[{\"token_id\": \"$tok\"}]")
+          echo "clob /books HTTP $code, $(wc -c < books.json) bytes"
+          python3 -c "import json; b=json.load(open('books.json'))[0]; print('bids', len(b['bids']), 'asks', len(b['asks']))"
