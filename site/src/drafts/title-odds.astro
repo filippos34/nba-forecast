@@ -1,0 +1,42 @@
+---
+// HIDDEN until the season-sim check passes (config site.title_odds). To restore: move back to src/pages/
+// and re-add the nav entry in layouts/Base.astro.
+import Base from "../layouts/Base.astro";
+import DotCompare from "../components/DotCompare.astro";
+import { load, pct, TEAM } from "../lib/data";
+const t = load<any>("title_odds.json", { rows: [] });
+const rows = [...t.rows].sort((a: any, b: any) => Math.max(b.model, b.polymarket ?? 0) - Math.max(a.model, a.polymarket ?? 0));
+const top = rows.slice(0, 16);
+const gap = (r: any) => Math.abs(r.model - (r.polymarket ?? r.model));
+const why = [...t.rows].sort((a: any, b: any) => gap(b) - gap(a)).slice(0, 6);
+---
+<Base title="Title odds" active="title-odds">
+  <h1>2027 championship odds</h1>
+  <p class="lede">The model plays out the whole season 50,000 times — every scheduled game, the play-in and four playoff
+    rounds — and counts how often each team wins the title. Polymarket's champion market is shown alongside.</p>
+  <DotCompare rows={top.map((r: any) => ({ label: r.team, a: r.model, b: r.polymarket }))}
+    aLabel="Model" bLabel="Polymarket" aColor="var(--s-model)" bColor="var(--s-poly)" />
+  <h2>Where the model and the market disagree</h2>
+  <p class="small">The gaps are large, and the market is the better-informed side until proven otherwise. The simulation
+    uses exactly the team strengths behind the daily game forecasts: a team rating from results (last season's, shrunk
+    25% toward average over the summer) plus the expected strength of the current roster from player ratings. Most of the
+    disagreement comes from the second part. Teams whose rosters rate well on last season's player data — Denver, Houston —
+    climb far above their team rating; last season's champion, New York, does not.</p>
+  <div class="table-scroll card"><table class="small">
+    <thead><tr><th>Team</th><th>Team rating (rank)</th><th>Roster vs league avg.</th><th>Combined (rank)</th>
+      <th>Model: champion</th><th>Polymarket</th></tr></thead>
+    <tbody>{why.map((r: any) => <tr><td>{TEAM[r.team] ?? r.team}</td><td>{r.elo.toFixed(0)} ({r.rank_elo})</td>
+      <td>{r.avail_rel > 0 ? "+" : "−"}{Math.abs(r.avail_rel).toFixed(0)}</td><td>{r.strength.toFixed(0)} ({r.rank_strength})</td>
+      <td>{pct(r.model, 1)}</td><td>{pct(r.polymarket, 1)}</td></tr>)}</tbody></table></div>
+  <p class="small">What the model does not know: player aging and development, coaching changes, health beyond the official
+    injury report, and playoff results — by design they do not move ratings. Preseason uncertainty is a ±65-point spread
+    per team, measured from how far teams moved from their preseason rating in 2022-26. Rating points: 28 ≈ one point of
+    margin per game.</p>
+  <h2>All teams</h2>
+  <div class="table-scroll card"><table>
+    <thead><tr><th>Team</th><th>Conf.</th><th>Avg. wins</th><th>Model: conf. title</th><th>Model: champion</th><th>Polymarket: champion</th></tr></thead>
+    <tbody>{rows.map((r: any) => <tr><td>{TEAM[r.team] ?? r.team}</td><td>{r.conference}</td><td>{r.mean_wins.toFixed(1)}</td>
+      <td>{pct(r.model_conf, 1)}</td><td>{pct(r.model, 1)}</td><td>{pct(r.polymarket, 1)}</td></tr>)}</tbody>
+  </table></div>
+  <p class="small muted">{t.note}{t.polymarket_at && ` Polymarket snapshot: ${new Date(t.polymarket_at).toUTCString()}.`}</p>
+</Base>

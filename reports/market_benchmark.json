@@ -1,0 +1,10 @@
+{
+ "note": "Aggregate Brier on 2025-26 games with a sportsbook line (n=974); source: reports/shrink_weight.json",
+ "n_games": 974,
+ "brier": {
+  "model": 0.2033,
+  "baseline_elo": 0.2059,
+  "book_open": 0.1998,
+  "book_close": 0.1948
+ }
+}

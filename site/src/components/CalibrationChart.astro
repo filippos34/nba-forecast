@@ -1,0 +1,27 @@
+---
+// Reliability diagram: mean forecast vs observed frequency per bin, one series per model, diagonal reference.
+interface Row { bin: string; n: number; mean_pred: number | null; actual: number | null }
+interface Props { tables: { label: string; color: string; rows: Row[] }[]; minN?: number }
+const { tables, minN = 10 } = Astro.props;
+const S = 360, m = 40, P = (v: number) => m + v * (S - 2 * m), Q = (v: number) => S - m - v * (S - 2 * m);
+---
+<div class="legend">{tables.map((t) => <span><i class="dot" style={`background:${t.color}`}></i>{t.label}</span>)}
+  <span><i style="background:var(--ink-3)"></i>perfect calibration</span></div>
+<svg viewBox={`0 0 ${S} ${S}`} role="img" aria-label="Calibration: forecast probability vs observed home-win rate"
+  style="width:100%;max-width:420px;height:auto;display:block">
+  {[0, 0.25, 0.5, 0.75, 1].map((t) => (<g>
+    <line x1={P(t)} x2={P(t)} y1={Q(0)} y2={Q(1)} stroke="var(--rule-2)" />
+    <line x1={P(0)} x2={P(1)} y1={Q(t)} y2={Q(t)} stroke="var(--rule-2)" />
+    <text x={P(t)} y={S - m + 16} font-size="11" text-anchor="middle" fill="var(--ink-3)">{t * 100}%</text>
+    <text x={m - 6} y={Q(t) + 4} font-size="11" text-anchor="end" fill="var(--ink-3)">{t * 100}%</text>
+  </g>))}
+  <line x1={P(0)} y1={Q(0)} x2={P(1)} y2={Q(1)} stroke="var(--ink-3)" stroke-dasharray="4 3" />
+  {tables.map((t) => { const pts = t.rows.filter((r) => r.n >= minN && r.mean_pred !== null && r.actual !== null);
+    return (<g>
+      <path d={pts.map((r, i) => `${i ? "L" : "M"}${P(r.mean_pred!)},${Q(r.actual!)}`).join("")} fill="none" stroke={t.color} stroke-width="2" />
+      {pts.map((r) => (<circle cx={P(r.mean_pred!)} cy={Q(r.actual!)} r="5" fill={t.color} stroke="var(--bg)" stroke-width="2">
+        <title>{`${t.label} · bin ${r.bin}: forecast ${(r.mean_pred! * 100).toFixed(1)}%, observed ${(r.actual! * 100).toFixed(1)}% (n=${r.n})`}</title>
+      </circle>))}
+    </g>); })}
+  <text x={S / 2} y={S - 6} font-size="11" text-anchor="middle" fill="var(--ink-2)">forecast P(home win)</text>
+</svg>

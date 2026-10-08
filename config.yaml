@@ -1,0 +1,29 @@
+# Model settings (public subset of the project's config.yaml)
+model:
+  # Player-availability layer (src/availability_model.py), adopted at Gate 2 (exp 03c).
+  # The old hand-typed PLAYER_RAPTOR table is archived (src/archive/player_raptor_apr2026.py).
+  injury_adjust: true
+  early_season_games: 15   # forecasts are flagged "early season" until both teams have played this many games
+
+availability:            # frozen at Gate 2 — everything fit on 2021-22 → 2023-24 only
+  fit_seasons: ["2021-22", "2022-23", "2023-24"]
+  value: blend           # Game Score + relative plus-minus
+  halflife_games: 160
+  shrink_minutes: 500
+  baseline_games: 0      # expected-lineup strength
+  presence_games: 82
+  lambda: 0.9            # fit on 2021-24 with roster membership (exp 03e)
+  membership: roster     # Gate 3 decision: roster (live ESPN roster; backtest = next box row) — exp 03e
+  p_plays_table: data/model/p_plays_status.csv
+
+spread:                  # derived margin model: margin ~ N(σ·Φ⁻¹(p), σ) (Gate 2, exp 08)
+  sigma: 13.604          # ML fit on 2021-22 → 2025-26 margins (roster-membership model); refit before each season
+  standalone:            # cross-check only (Gate 3): μ = slope × Elo diff / 28, fit on 2021-26 production
+    slope: 1.2111
+    sigma: 13.767
+  max_gap_pts: 1.0       # |μ_derived − μ_standalone| > this → that game's spreads are flagged
+  # NOTE (Gate 3): with roster membership the derived spread is slightly worse than the standalone
+  # margin model (CRPS +0.011 / +0.021, CIs exclude 0; mean μ gap 0.26 / 0.47 pts). Kept for
+  # moneyline/spread consistency pending decision — reports/spreads_derived_vs_standalone.csv
+  fit_seasons: ["2021-22", "2022-23", "2023-24", "2024-25", "2025-26"]
+

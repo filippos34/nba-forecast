@@ -1,0 +1,37 @@
+---
+import Base from "../layouts/Base.astro";
+import ForestPlot from "../components/ForestPlot.astro";
+import { load, signed, num } from "../lib/data";
+const e = load<any>("experiments.json", { experiments: [], caught: [] });
+const ex = e.experiments.filter((x: any) => x.ci_lo !== null);
+const adopted = (o: string) => o.startsWith("Adopted") || o === "Fixed";
+const short = (s: string) => { const t = s.replace(/^\d\.\d[a-z0-9()]*\s*/, ""); return t.length > 40 ? t.slice(0, 39).trim() + "…" : t; };
+---
+<Base title="Experiments" active="experiments">
+  <h1>Experiments</h1>
+  <p class="lede">Every change ever tested on the model, including the ones that failed. {e.rule}{" "}
+    Brier differences are new minus old: negative means the change helped.</p>
+
+  <h2>Effect of each change (2025-26 test season, 95% CI)</h2>
+  <ForestPlot rows={ex.map((x: any) => ({ label: `${x.id} ${short(x.name)}`, d: x.delta, lo: x.ci_lo, hi: x.ci_hi, adopted: adopted(x.decision) }))} />
+  <p class="small muted">Most ideas — rest-day penalties, travel, a preseason roster prior, Kalman-style rating variance,
+    letting playoff games move ratings — had confidence intervals spanning zero, so they were left out.</p>
+
+  <h2>All experiments</h2>
+  <div class="table-scroll card"><table class="small">
+    <thead><tr><th>Experiment</th><th>Δ Brier 2025-26</th><th>95% CI</th><th>Δ 2024-25</th><th>Auto rule</th><th>Decision</th></tr></thead>
+    <tbody>{e.experiments.map((x: any) => <tr>
+      <td><b>{x.id}</b> {x.name}{x.decision_reason && !x.decision_reason.startsWith("Rule 4") && <div class="muted">{x.decision_reason}</div>}</td>
+      <td>{signed(x.delta)}</td><td>[{signed(x.ci_lo)}, {signed(x.ci_hi)}]</td><td>{signed(x.delta_fold2)}</td>
+      <td class="muted">{x.auto_verdict}</td>
+      <td><span class={`tag ${adopted(x.decision) ? "ok" : "no"}`}>{x.decision}</span></td></tr>)}</tbody>
+  </table></div>
+  <p class="small muted">"Auto rule" is the mechanical verdict on the 2025-26 fold alone; "Decision" is the final call and,
+    where it differs, why — on a basis stated before seeing the result.</p>
+
+  <h2>Mistakes caught</h2>
+  <p class="small">Each of these made the model look better than it was. They were found by the project's own checks and fixed
+    or withdrawn before any result was relied on.</p>
+  <div class="grid">{e.caught.map((c: any) => <div class="card"><h3 style="margin-top:0">{c.title}</h3>
+    <p class="small" style="margin:0 0 6px">{c.what}</p><p class="small muted" style="margin:0"><b>Fix:</b> {c.fix}</p></div>)}</div>
+</Base>

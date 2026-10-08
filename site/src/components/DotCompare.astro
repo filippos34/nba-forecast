@@ -1,0 +1,24 @@
+---
+// Two dots per row (model, market) on one probability axis, joined by a line; hover titles; legend.
+interface Row { label: string; a: number | null; b: number | null }
+interface Props { rows: Row[]; aLabel: string; bLabel: string; aColor: string; bColor: string }
+const { rows, aLabel, bLabel, aColor, bColor } = Astro.props;
+const W = 760, rowH = 26, m = { l: 120, r: 24, t: 8, b: 26 }, H = m.t + m.b + rows.length * rowH;
+const raw = Math.max(0.05, ...rows.flatMap((r) => [r.a ?? 0, r.b ?? 0]));
+const step = raw > 0.4 ? 0.1 : raw > 0.2 ? 0.05 : 0.025;
+const max = Math.ceil(raw / step) * step;
+const X = (v: number) => m.l + (v / max) * (W - m.l - m.r);
+const ticks = Array.from({ length: Math.round(max / step) + 1 }, (_, k) => k * step);
+---
+<div class="legend"><span><i class="dot" style={`background:${aColor}`}></i>{aLabel}</span>
+  <span><i class="dot" style={`background:${bColor}`}></i>{bLabel}</span></div>
+<svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${aLabel} vs ${bLabel}`} style="width:100%;height:auto;display:block">
+  {ticks.map((t) => (<g><line x1={X(t)} x2={X(t)} y1={m.t} y2={H - m.b} stroke="var(--rule-2)" />
+    <text x={X(t)} y={H - 8} font-size="11" text-anchor="middle" fill="var(--ink-3)">{+(t * 100).toFixed(1)}%</text></g>))}
+  {rows.map((r, i) => { const y = m.t + i * rowH + rowH / 2; return (<g>
+    <text x={m.l - 8} y={y + 4} font-size="12" text-anchor="end" fill="var(--ink)">{r.label}</text>
+    {r.a !== null && r.b !== null && <line x1={X(r.a)} x2={X(r.b)} y1={y} y2={y} stroke="var(--muted-mark)" stroke-width="2" />}
+    {r.b !== null && <circle cx={X(r.b)} cy={y} r="5" fill={bColor} stroke="var(--bg)" stroke-width="2"><title>{`${r.label} · ${bLabel}: ${(r.b * 100).toFixed(1)}%`}</title></circle>}
+    {r.a !== null && <circle cx={X(r.a)} cy={y} r="5" fill={aColor} stroke="var(--bg)" stroke-width="2"><title>{`${r.label} · ${aLabel}: ${(r.a * 100).toFixed(1)}%`}</title></circle>}
+  </g>); })}
+</svg>

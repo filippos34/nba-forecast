@@ -1,0 +1,71 @@
+---
+import Base from "../layouts/Base.astro";
+import LineChart from "../components/LineChart.astro";
+import CalibrationChart from "../components/CalibrationChart.astro";
+import { load, num } from "../lib/data";
+const s = load<any>("season.json", { games: [], n: 0 });
+const c = load<any>("calibration.json", { tables: {} });
+const b = load<any>("backtest.json", { rows: [], market_aggregate: { brier: {} } });
+const g = s.games;
+const last = g.length ? g[g.length - 1] : null;
+const xs = g.map((x: any) => x.date);
+const S = [
+  { key: "model", label: "Model", color: "var(--s-model)" },
+  { key: "polymarket", label: "Polymarket", color: "var(--s-poly)" },
+  { key: "baseline_elo", label: "Baseline Elo", color: "var(--s-base)" },
+];
+const series = (m: string) => S.map((x) => ({ ...x, values: g.map((r: any) => r[`${m}_${x.key}`] ?? null) }));
+const agg = b.market_aggregate.brier;
+---
+<Base title="Season tracker" active="season">
+  <h1>2026-27 season tracker</h1>
+  <p class="lede">Every forecast is frozen before tip-off and scored after the final buzzer. Lower is better for both scores;
+    a coin flip scores 0.250 Brier and 0.693 log loss.</p>
+
+  {g.length === 0 ? (
+    <div class="card"><b>The season starts on October 20, 2026.</b>
+      <p class="muted small" style="margin:6px 0 0">Running scores appear here after the first games. Until then, the
+        out-of-sample results of the last two seasons are below.</p></div>
+  ) : (<>
+    <div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(180px,1fr))">
+      {S.map((x) => <div class="card"><div class="small muted"><i class="sw" style={`background:${x.color}`}></i>{x.label}</div>
+        <div class="big">{num(last[`brier_${x.key}`])}</div><div class="small muted">Brier · log loss {num(last[`ll_${x.key}`])}</div></div>)}
+      <div class="card"><div class="small muted">Games scored</div><div class="big">{s.n}</div></div>
+    </div>
+    <h2>Running Brier score</h2>
+    <LineChart id="brier" series={series("brier")} xLabels={xs} yLabel="Running Brier score by model" />
+    <h2>Running log loss</h2>
+    <LineChart id="ll" series={series("ll")} xLabels={xs} yLabel="Running log loss by model" />
+  </>)}
+
+  <h2>Out-of-sample results, previous seasons</h2>
+  <p class="small muted">Each season forecast walk-forward: parameters fit only on earlier seasons.</p>
+  <div class="table-scroll card"><table>
+    <thead><tr><th>Season</th><th>Model</th><th>Games</th><th>Brier</th><th>Log loss</th><th>Accuracy</th></tr></thead>
+    <tbody>{b.rows.map((r: any) => <tr><td>{r.season}</td><td>{r.model}</td><td>{r.n}</td><td>{num(r.brier)}</td><td>{num(r.logloss)}</td><td>{(r.acc * 100).toFixed(1)}%</td></tr>)}</tbody>
+  </table></div>
+  {agg.book_close && <p class="small muted">For scale: on the 974 games of 2025-26 with a sportsbook line, the closing line scored
+    {" "}<b>{num(agg.book_close)}</b> and the opening line {num(agg.book_open)}, against the model's {num(agg.model)} on the same games.
+    The market is better — the gap is the honest benchmark this project tracks.</p>}
+
+  <h2>Calibration (2025-26, out of sample)</h2>
+  <p class="small muted">When the model says 70%, does the home team win about 70% of the time? Points on the dashed line are
+    perfectly calibrated. Bins with fewer than 10 games are hidden.</p>
+  <div class="calib">
+    <CalibrationChart tables={[
+      { label: "Model", color: "var(--s-model)", rows: c.tables.model ?? [] },
+      { label: "Baseline Elo", color: "var(--s-base)", rows: c.tables.baseline_elo ?? [] }]} />
+    <div class="table-scroll"><table class="small">
+      <thead><tr><th>Bin</th><th>Games</th><th>Forecast</th><th>Observed</th></tr></thead>
+      <tbody>{(c.tables.model ?? []).map((r: any) => <tr><td>{r.bin}</td><td>{r.n}</td>
+        <td>{r.mean_pred === null ? "—" : (r.mean_pred * 100).toFixed(1) + "%"}</td>
+        <td>{r.actual === null ? "—" : (r.actual * 100).toFixed(1) + "%"}</td></tr>)}</tbody></table>
+      <p class="small muted">Table: model.</p></div>
+  </div>
+</Base>
+<style>
+  .big { font-size: 26px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 6px; vertical-align: -1px; }
+  .calib { display: grid; grid-template-columns: minmax(0, 420px) minmax(0, 1fr); gap: 24px; align-items: start; }
+  @media (max-width: 720px) { .calib { grid-template-columns: 1fr; } }
+</style>

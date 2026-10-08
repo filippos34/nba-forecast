@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+.pytest_cache/
+data/
+logs/
+site/node_modules/
+site/dist/
+site/.astro/
+site/public/data/

@@ -1,0 +1,59 @@
+---
+import Base from "../layouts/Base.astro";
+import { load, pct, etTime, etDate, TEAM } from "../lib/data";
+const t = load<any>("today.json", { date: null, games: [] });
+const statusOrder: Record<string, number> = { Out: 0, Doubtful: 1, Questionable: 2, Probable: 3, Available: 4 };
+---
+<Base title="Today" active="">
+  <h1>{t.date ? etDate(t.date) : "No games scheduled"}</h1>
+  <p class="lede">The model's pre-game win probabilities, next to Polymarket's de-vigged price for the same game.
+    The model sees only game results, schedules and official injury reports — never market prices.</p>
+  {t.games.length > 0 && t.games[0].early_season &&
+    <p class="small muted">Early season: until both teams have played 15 games, ratings rest mostly on last season and
+      roster changes, so forecasts are less certain.</p>}
+  <div class="grid">
+    {t.games.map((g: any) => {
+      const pm = g.polymarket?.p_home ?? null;
+      const injuries = [...g.injuries].sort((a: any, b: any) => (statusOrder[a.status] ?? 9) - (statusOrder[b.status] ?? 9));
+      return (
+      <article class="card game">
+        <div class="when small muted">{etTime(g.tip_utc)}{g.neutral && " · neutral site"}</div>
+        <div class="teams">
+          <div class="row"><span class="abbr">{g.away}</span><span class="name">{TEAM[g.away]}</span>
+            <span class="p">{pct(1 - g.model_p_home)}</span></div>
+          <div class="row"><span class="abbr">{g.home}</span><span class="name">{TEAM[g.home]} <span class="muted small">home</span></span>
+            <span class="p">{pct(g.model_p_home)}</span></div>
+        </div>
+        <div class="bar" role="img" aria-label={`Model: ${g.home} ${pct(g.model_p_home)}`}>
+          <span class="away" style={`width:${(1 - g.model_p_home) * 100}%`}></span><span class="home" style={`width:${g.model_p_home * 100}%`}></span>
+          {pm !== null && <i class="mk" style={`left:${(1 - pm) * 100}%`} title={`Polymarket: ${g.home} ${pct(pm, 1)}`}></i>}
+        </div>
+        <dl class="facts small">
+          <div><dt>Model, {g.home}</dt><dd>{pct(g.model_p_home, 1)}</dd></div>
+          <div><dt>Polymarket, {g.home}</dt><dd>{pm === null ? <span class="muted">not listed yet</span> : pct(pm, 1)}</dd></div>
+          <div><dt>Model margin</dt><dd>{g.model_spread_home <= 0 ? `${g.home} by ${Math.abs(g.model_spread_home).toFixed(1)}` : `${g.away} by ${g.model_spread_home.toFixed(1)}`}</dd></div>
+        </dl>
+        <details>
+          <summary>Injury statuses used ({injuries.length})</summary>
+          {injuries.length === 0
+            ? <p class="small muted">{g.injury_report_at ? "No listed players with projected minutes." : "No official injury report yet — every rostered player counts as available. The forecast updates when the report is out."}</p>
+            : <table class="small"><thead><tr><th>Player</th><th>Status</th><th>P(plays)</th><th>Proj. min</th></tr></thead>
+                <tbody>{injuries.map((x: any) => <tr><td>{x.team} {x.player}</td><td>{x.status}</td><td>{pct(x.p_plays)}</td><td>{x.proj_min}</td></tr>)}</tbody></table>}
+          {g.injury_report_at && <p class="small muted">Official report issued {new Date(g.injury_report_at).toUTCString()}.</p>}
+        </details>
+      </article>); })}
+  </div>
+  <p class="small muted" style="margin-top:20px">Bar: model probability (blue = home). The tick marks Polymarket's home probability.
+    Margin = the model's expected point margin, derived from its win probability (σ = 13.6 points).</p>
+</Base>
+<style>
+  .game .teams .row { display: grid; grid-template-columns: 52px 1fr auto; align-items: baseline; gap: 8px; padding: 2px 0; }
+  .abbr { font-weight: 700; } .name { color: var(--ink-2); font-size: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .p { font-size: 22px; font-weight: 650; font-variant-numeric: tabular-nums; }
+  .bar { position: relative; display: flex; gap: 2px; height: 10px; margin: 10px 0 12px; }
+  .bar span { display: block; height: 100%; }
+  .bar .away { background: var(--muted-mark); border-radius: 4px 0 0 4px; } .bar .home { background: var(--s-model); border-radius: 0 4px 4px 0; }
+  .bar .mk { position: absolute; top: -4px; width: 3px; height: 18px; background: var(--s-poly); border: 1px solid var(--bg); border-radius: 2px; transform: translateX(-50%); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 0; }
+  .facts dt { color: var(--ink-2); font-size: 12px; } .facts dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+</style>

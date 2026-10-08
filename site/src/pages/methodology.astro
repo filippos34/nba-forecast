@@ -1,0 +1,88 @@
+---
+import Base from "../layouts/Base.astro";
+import { existsSync } from "node:fs";
+import { join } from "node:path";
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const hasGuide = existsSync(join(process.cwd(), "public", "math-guide.pdf"));
+---
+<Base title="Methodology" active="methodology">
+  <h1>Methodology</h1>
+  <p class="lede">A win-probability model built only from game data: results, schedules, box scores and official injury
+    reports. Market prices are never inputs — they are only used afterwards, to compare.</p>
+  {hasGuide && <p class="small"><a href={`${base}/math-guide.pdf`}>The full math guide (PDF)</a></p>}
+
+  <h2>Pipeline</h2>
+  <figure class="pipe" aria-label="Pipeline architecture">
+    <div class="col"><div class="hd">Sources</div>
+      <div class="box">ESPN API<span>scores, schedule, box scores, rosters</span></div>
+      <div class="box">Official NBA injury reports<span>PDFs, every 15 min on game days</span></div>
+      <div class="box">Polymarket<span>prices, for comparison only</span></div></div>
+    <div class="arrow">→</div>
+    <div class="col"><div class="hd">Timestamped store</div>
+      <div class="box">games, box scores<span>with tip-off times</span></div>
+      <div class="box">injury snapshots<span>with fetch times</span></div>
+      <div class="box">market snapshots<span>append-only</span></div></div>
+    <div class="arrow">→</div>
+    <div class="col"><div class="hd">Model</div>
+      <div class="box">Team Elo walk<span>in tip-off order</span></div>
+      <div class="box">Player availability<span>expected lineup at T−60 min</span></div>
+      <div class="box">Win prob → margin<span>normal, σ 13.6 pts</span></div></div>
+    <div class="arrow">→</div>
+    <div class="col"><div class="hd">Outputs</div>
+      <div class="box">Forecast log<span>frozen before tip</span></div>
+      <div class="box">Scoring<span>Brier, log loss, calibration</span></div>
+      <div class="box">This site<span>static JSON, rebuilt daily</span></div></div>
+  </figure>
+
+  <h2>1. Team ratings (Elo)</h2>
+  <p>Each team has a rating; the forecast for a game is <code>P(home) = 1 / (1 + 10<sup>−d/400</sup>)</code>, where
+    <code>d</code> is the rating gap plus adjustments. After each game both ratings move by <code>K × (result − forecast)</code>, K = 10.</p>
+  <ul>
+    <li><b>Home court</b> +50 rating points when the home team is the favorite, +35 otherwise; 0 at neutral sites.</li>
+    <li><b>Back-to-backs</b> −60 for a team playing on consecutive days, counted on the arena's local date.</li>
+    <li><b>Offseason</b> ratings keep 75% of their distance from average (1500).</li>
+    <li><b>Older seasons</b> count less when fitting: K × 0.6 per season back.</li>
+    <li><b>Playoff games</b> do not change regular-season ratings (tested: letting them in made forecasts worse).</li>
+  </ul>
+
+  <h2>2. Player availability</h2>
+  <p>Ratings describe a team at full strength. The availability layer asks who will actually play. Each player has a rating
+    (a blend of Game Score and on-court plus-minus relative to teammates, shrunk toward replacement level for small samples).
+    The team's expected lineup strength is</p>
+  <p class="eq"><code>λ · 28 · Σ P(plays | status) · projected minutes / 48 · (rating − replacement)</code></p>
+  <p><code>P(plays | status)</code> comes from the official injury report published at least 60 minutes before tip-off — for
+    example, how often a "Questionable" player has actually played. λ = 0.9 and every other setting were fit on 2021-22 to
+    2023-24 only, then tested once on 2024-25 and 2025-26.</p>
+
+  <h2>3. Margins</h2>
+  <p>The expected point margin is derived from the win probability: <code>margin ~ Normal(σ · Φ<sup>−1</sup>(p), σ)</code>,
+    σ = 13.6 points. A separately fitted margin model was not better.</p>
+
+  <h2>4. No look-ahead — the rules</h2>
+  <ol>
+    <li>Every input carries the time it became known. A forecast may only use inputs known before it was made; the code refuses
+      to run otherwise.</li>
+    <li>Ratings are updated in tip-off order. A guard fails the build if a game is processed after a later one.</li>
+    <li>Injury information comes only from reports stored with their publication time — never from who actually played.</li>
+    <li>Walk-forward validation only: parameters are fit on seasons before the test season.</li>
+    <li>Market prices are never model inputs.</li>
+    <li>A change is adopted only if the paired bootstrap (2,000 resamples) 95% CI of the per-game Brier difference excludes zero,
+      or the gain is at least 0.0085 — the smallest difference a season of games can reliably detect.</li>
+  </ol>
+
+  <h2>5. Scoring</h2>
+  <p><b>Brier score</b> = mean of (forecast − outcome)²; <b>log loss</b> = mean of −log(probability given to what happened).
+    Both reward honest probabilities; log loss punishes confident misses harder. <b>Calibration</b> checks that 70% forecasts
+    come true about 70% of the time.</p>
+</Base>
+<style>
+  .pipe { display: flex; align-items: stretch; gap: 8px; margin: 12px 0 8px; overflow-x: auto; padding-bottom: 6px; }
+  .pipe .col { display: flex; flex-direction: column; gap: 8px; min-width: 170px; flex: 1; }
+  .pipe .hd { font-size: 12px; color: var(--ink-2); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+  .pipe .box { background: var(--surface); border: 1px solid var(--rule); border-radius: 8px; padding: 8px 10px; font-size: 14px; font-weight: 600; }
+  .pipe .box span { display: block; font-weight: 400; color: var(--ink-2); font-size: 12px; }
+  .pipe .arrow { align-self: center; color: var(--ink-3); font-size: 20px; }
+  @media (max-width: 720px) { .pipe { flex-direction: column; } .pipe .arrow { transform: rotate(90deg); } }
+  code { font-size: 0.92em; background: var(--rule-2); padding: 1px 4px; border-radius: 4px; }
+  .eq { overflow-x: auto; }
+</style>

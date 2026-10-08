@@ -1,0 +1,23 @@
+---
+// Effect (Δ Brier, negative = better) with 95% CI per experiment; zero line; adopted vs rejected.
+interface Row { label: string; d: number; lo: number; hi: number; adopted: boolean }
+interface Props { rows: Row[] }
+const { rows } = Astro.props;
+const W = 760, rowH = 24, m = { l: 310, r: 20, t: 10, b: 28 }, H = m.t + m.b + rows.length * rowH;
+const lo = Math.min(...rows.map((r) => r.lo), -0.001), hi = Math.max(...rows.map((r) => r.hi), 0.001);
+const X = (v: number) => m.l + ((v - lo) / (hi - lo)) * (W - m.l - m.r);
+const ticks = [lo, lo / 2, 0, hi / 2, hi];
+---
+<div class="legend"><span><i class="dot" style="background:var(--s-model)"></i>adopted</span>
+  <span><i class="dot" style="background:var(--muted-mark)"></i>rejected / not adopted</span>
+  <span class="muted">← better (lower Brier) · worse →</span></div>
+<svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label="Experiment effects with 95% confidence intervals" style="width:100%;height:auto;display:block">
+  {ticks.map((t) => (<text x={X(t)} y={H - 8} font-size="11" text-anchor="middle" fill="var(--ink-3)">{t.toFixed(4)}</text>))}
+  <line x1={X(0)} x2={X(0)} y1={m.t} y2={H - m.b} stroke="var(--ink-3)" stroke-dasharray="3 3" />
+  {rows.map((r, i) => { const y = m.t + i * rowH + rowH / 2; const c = r.adopted ? "var(--s-model)" : "var(--muted-mark)"; return (<g>
+    <text x={m.l - 8} y={y + 4} font-size="12" text-anchor="end" fill="var(--ink)">{r.label}</text>
+    <line x1={X(r.lo)} x2={X(r.hi)} y1={y} y2={y} stroke={c} stroke-width="2" stroke-linecap="round" />
+    <circle cx={X(r.d)} cy={y} r="5" fill={c} stroke="var(--bg)" stroke-width="2">
+      <title>{`${r.label}: Δ ${r.d.toFixed(4)} [${r.lo.toFixed(4)}, ${r.hi.toFixed(4)}]`}</title></circle>
+  </g>); })}
+</svg>
