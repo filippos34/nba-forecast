@@ -83,7 +83,7 @@ def today(snaps) -> dict:
         inj = []
         for team, det in ((r.home_team, pred["home_avail_detail"]), (r.away_team, pred["away_avail_detail"])):
             if det is not None and len(det):
-                for x in det[det["status"] != "Not listed"].sort_values("proj_min", ascending=False).itertuples():
+                for x in det[~det["status"].isin(["Not listed", "No report yet"])].sort_values("proj_min", ascending=False).itertuples():
                     if x.proj_min >= 1 or x.status in ("Out", "Doubtful"):
                         inj.append({"team": team, "player": x.player_name, "status": x.status,
                                     "p_plays": round(float(x.p_plays), 2), "proj_min": round(float(x.proj_min), 1)})

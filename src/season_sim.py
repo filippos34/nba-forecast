@@ -63,7 +63,10 @@ def game_prob(h_elo, a_elo, h_av, a_av, neutral, rest, p=None):
     return p_home(h_elo + h_av + hc + rest - (a_elo + a_av))
 
 
-def simulate(n: int = 50_000, seed: int = 0, inputs: pd.DataFrame | None = None) -> pd.DataFrame:
+def simulate(n: int = 50_000, seed: int = 0, inputs: pd.DataFrame | None = None,
+             schedule: pd.DataFrame | None = None) -> pd.DataFrame:
+    """`inputs`: team × {elo, avail}. `schedule`: home_team, away_team, is_neutral, home_b2b, away_b2b
+    (default: data/schedule_2026_27.csv)."""
     rng = np.random.default_rng(seed)
     p = br.PRODUCTION
     hc_po = br.load_playoff_params().HC
@@ -76,7 +79,7 @@ def simulate(n: int = 50_000, seed: int = 0, inputs: pd.DataFrame | None = None)
     R = E + AV[None, :]                                                        # v3 strength, n × T
     base = (inputs["elo"] + inputs["avail"]).reindex(teams).to_numpy(float)
 
-    s = pd.read_csv(DATA / "schedule_2026_27.csv")
+    s = pd.read_csv(DATA / "schedule_2026_27.csv") if schedule is None else schedule
     h = s["home_team"].map(idx).to_numpy()
     a = s["away_team"].map(idx).to_numpy()
     neutral = s["is_neutral"].astype(bool).to_numpy()

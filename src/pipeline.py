@@ -78,11 +78,13 @@ def daterange(start: date, end: date):
         d += timedelta(days=1)
 
 
-def parse_event(event: dict, query_date: date, season_label: str, espn_year: int):
-    """One ESPN event → row dict, or None for preseason / other-year / non-NBA events."""
+def parse_event(event: dict, query_date: date, season_label: str, espn_year: int,
+                season_types: dict = SEASON_TYPES):
+    """One ESPN event → row dict, or None for preseason / other-year / non-NBA events.
+    `season_types` is only widened by src/rehearsal.py (preseason, its own files — never games_all)."""
     season = event.get("season", {})
     stype = season.get("type")
-    if stype not in SEASON_TYPES or season.get("year") != espn_year:
+    if stype not in season_types or season.get("year") != espn_year:
         return None
     comp = event["competitions"][0]
     status = comp.get("status", {}).get("type", {})
@@ -110,7 +112,7 @@ def parse_event(event: dict, query_date: date, season_label: str, espn_year: int
         "date_local":   pd.Timestamp(query_date),
         "tip_utc":      tip.tz_convert("UTC").strftime("%Y-%m-%dT%H:%M:%SZ"),
         "season":       season_label,
-        "season_type":  SEASON_TYPES[stype],
+        "season_type":  season_types[stype],
         "home_team":    ht,
         "away_team":    at,
         "home_pts":     hp,

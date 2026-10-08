@@ -15,6 +15,7 @@ availability:            # frozen at Gate 2 — everything fit on 2021-22 → 20
   lambda: 0.9            # fit on 2021-24 with roster membership (exp 03e)
   membership: roster     # Gate 3 decision: roster (live ESPN roster; backtest = next box row) — exp 03e
   p_plays_table: data/model/p_plays_status.csv
+  p_plays_pre_report: 0.6498   # before any official report: minutes-weighted mean P(plays | T−60 status), fit 2021-24 (exp 12)
 
 spread:                  # derived margin model: margin ~ N(σ·Φ⁻¹(p), σ) (Gate 2, exp 08)
   sigma: 13.604          # ML fit on 2021-22 → 2025-26 margins (roster-membership model); refit before each season

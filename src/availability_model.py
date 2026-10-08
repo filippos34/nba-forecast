@@ -165,6 +165,12 @@ def live_team_adjustment(team: str, tip: pd.Timestamp, team_status: pd.DataFrame
     listed = (status != "Not listed").to_numpy()
     counted = c["seen_recently"].to_numpy() | listed
     p = _p_plays(status, f.p_table)
+    pre = settings().get("p_plays_pre_report")
+    if issued is None and pre is not None:
+        # No official report covers this team yet: the expected P(plays) before the report (fit 2021-24,
+        # experiments/12), so a morning forecast = the expected value of the validated T−60 forecast.
+        p = np.full(len(c), float(pre))
+        status = pd.Series("No report yet", index=c.index)
     contrib = np.where(counted, p * c["proj_min"].to_numpy() / 48.0 * (c["rating"].to_numpy() - f.r_repl), 0.0)
     detail = c.assign(status=status.to_numpy(), p_plays=p, counted=counted, contrib_pts=contrib)
     return {"elo": f.lam * 28.0 * float(contrib.sum()), "points": float(contrib.sum()),

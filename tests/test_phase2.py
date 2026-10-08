@@ -150,3 +150,24 @@ def test_derived_spread_consistent_with_win_prob():
     z = rng.normal(0, 0.6, 20000)
     margin = 12.0 * z + rng.normal(0, 12.0, 20000)
     assert mm.fit_sigma(mm.norm.cdf(z), margin).sigma == pytest.approx(12.0, rel=0.05)
+
+
+def test_pre_report_p_plays_only_before_a_report(monkeypatch):
+    """No report → every counted player at the fitted pre-report P; same players counted as before.
+    With a report → the report's statuses (unchanged behaviour)."""
+    from conftest import HAVE_DATA
+    if not HAVE_DATA:
+        pytest.skip("needs the private dataset (data/)")
+    import availability_model as am
+    import config
+    tip = pd.Timestamp("2026-10-20T23:00:00Z")
+    real = config.get
+    no_fix = {**real("availability"), "p_plays_pre_report": None}
+    monkeypatch.setattr(am, "settings", lambda: no_fix)
+    old = am.live_team_adjustment("DEN", tip, None)
+    monkeypatch.setattr(am, "settings", lambda: real("availability"))
+    new = am.live_team_adjustment("DEN", tip, None)
+    pre = float(real("availability")["p_plays_pre_report"])
+    assert list(new["detail"]["counted"]) == list(old["detail"]["counted"])
+    assert (new["detail"]["p_plays"] == pre).all() and (new["detail"]["status"] == "No report yet").all()
+    assert new["elo"] == pytest.approx(old["elo"] * pre / float(am.fitted().p_table["Not listed"]), rel=1e-9)
