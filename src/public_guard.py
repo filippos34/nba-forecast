@@ -5,7 +5,8 @@ src/public_guard.py — what may never appear in anything published (site JSON, 
    is itself public — names no bookmaker. A token matches if its hash is in BOOKMAKER_HASHES.
 2. Excluded paths (raw data, market snapshots, the parked staking / alerting code, private notes).
 
-    python -m public_guard <dir>     → exit 1 and list every hit (used by `make publish` and public CI)
+    python -m public_guard <dir>                → exit 1 and list every hit (`make publish`, public CI)
+    python -m public_guard --names-only <site>  → bookmaker names only (the deployed site, every hour)
 """
 from __future__ import annotations
 
@@ -70,7 +71,8 @@ EXCLUDED_PATHS = [
     r"(^|/)data/", r"(^|/)odds/", r"(^|/)scanner/", r"scrapers?(/|$)", r"(^|/)ops/", r"(^|/)deploy/",
     r"(^|/)archive/", r"(^|/)props/", r"bet", r"stak", r"alert", r"kelly", r"paper_trade", r"historical_lines",
     r"odds_snapshots", r"decision", r"(^|/)clv", r"\.env$", r"\.parquet$", r"\.pdf$", r"CLAUDE\.md$",
-    r"super_prompt", r"private_", r"shrink_weight", r"policy_backtest",
+    r"super_prompt", r"private_", r"shrink_weight", r"policy_backtest", r"(^|/)dashboard", r"live_compare",
+    r"live_push",
 ]
 ALLOWED_DATA = re.compile(r"^site/public/data/[a-z_]+\.json$")       # small derived site JSON
 _TOKEN = re.compile(r"[a-z0-9]+")
@@ -115,8 +117,11 @@ def scan(root: Path, skip=(".git", "node_modules", "dist", ".astro", "__pycache_
 
 
 def main(argv=None) -> int:
-    root = Path((argv or sys.argv[1:] or ["."])[0])
-    problems = scan(root)
+    args = list(argv if argv is not None else sys.argv[1:])
+    names_only = "--names-only" in args          # a built site: data/ paths are expected, names are not
+    args = [a for a in args if a != "--names-only"]
+    root = Path((args or ["."])[0])
+    problems = [p for p in scan(root) if not (names_only and p.startswith("excluded path"))]
     for p in problems:
         print(p)
     print(f"public guard: {'FAIL' if problems else 'ok'} ({len(problems)} problems) in {root}")

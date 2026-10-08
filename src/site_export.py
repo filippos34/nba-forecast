@@ -40,7 +40,7 @@ def public_snaps(snaps: pd.DataFrame) -> pd.DataFrame:
 
 
 def _write(name: str, obj):
-    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / name).parent.mkdir(parents=True, exist_ok=True)
     (OUT / name).write_text(json.dumps(obj, indent=1, default=str, allow_nan=False))
 
 
@@ -51,7 +51,7 @@ def _clean(x):
 
 
 def polymarket_ml(snaps: pd.DataFrame, game_id: int, home: str, away: str, before=None) -> dict | None:
-    """De-vigged Polymarket home-win probability from the two executable asks (power method)."""
+    """Polymarket home-win probability: midpoint of best bid / ask (fallback: de-vigged asks)."""
     from odds import devig                 # market code: private repo only (snaps is empty without it)
     s = snaps[(snaps["venue"] == "polymarket") & (snaps["game_id"] == game_id) & (snaps["market"] == "ml")]
     if before is not None:
@@ -59,12 +59,17 @@ def polymarket_ml(snaps: pd.DataFrame, game_id: int, home: str, away: str, befor
     s = s.sort_values("fetched_at").drop_duplicates("selection", keep="last").set_index("selection")
     if home not in s.index or away not in s.index:
         return None
-    q = np.array([s.loc[home, "implied_prob"], s.loc[away, "implied_prob"]])
-    p = devig.power(q)[0] if q.sum() > 1 else q[0] / q.sum()
+    h, a_ = s.loc[home], s.loc[away]
+    if pd.notna(h.get("bid_prob")) and pd.notna(a_.get("bid_prob")):      # midpoint, as on the Today page
+        p = ((h["implied_prob"] + h["bid_prob"]) / 2 + 1 - (a_["implied_prob"] + a_["bid_prob"]) / 2) / 2
+    else:
+        q = np.array([h["implied_prob"], a_["implied_prob"]])
+        p = devig.power(q)[0] if q.sum() > 1 else q[0] / q.sum()
     return {"p_home": round(float(p), 4), "at": s["fetched_at"].max().isoformat()}
 
 
-def today(snaps) -> dict:
+def today() -> dict:
+    """data/live/model.json: the model side of the Today page (public; refreshed hourly on game days)."""
     from live import predict_day
     import margin_model as mm
     import config
@@ -72,9 +77,11 @@ def today(snaps) -> dict:
     g = g[g["season_type"].isin(["regular", "playoff", "playin"]) & ~g["completed"]]
     now_et = pd.Timestamp.now(tz=ET).strftime("%Y-%m-%d")
     days = sorted(d for d in g["date_local"].unique() if d >= now_et)
+    now = datetime.now(timezone.utc).isoformat(timespec="seconds")
     if not days:
-        return {"date": None, "games": []}
+        return {"generated_at": now, "date": None, "games": []}
     d = days[0]
+    n_label = int(config.get("site").get("early_label_games", 10))
     day, _ = predict_day(d)
     ds = mm.DerivedSpread(sigma=float(config.get("spread")["sigma"]))
     games = []
@@ -91,10 +98,27 @@ def today(snaps) -> dict:
         games.append({"game_id": int(r.game_id), "tip_utc": r.tip_utc, "home": r.home_team, "away": r.away_team,
                       "neutral": bool(r.is_neutral), "model_p_home": round(float(r.p_home), 4),
                       "model_spread_home": round(float(ds.fair_spread(r.p_home)), 1),
-                      "polymarket": polymarket_ml(snaps, int(r.game_id), r.home_team, r.away_team) if len(snaps) else None,
-                      "injury_report_at": max(rep).isoformat() if rep else None, "injuries": inj,
-                      "early_season": bool(r.early_season)})
-    return {"date": d, "games": games}
+                      "model_as_of": now, "injury_report_at": max(rep).isoformat() if rep else None,
+                      "injuries": inj, "home_games": int(r.home_games), "away_games": int(r.away_games),
+                      "early_estimate": bool(min(r.home_games, r.away_games) < n_label),
+                      "pre_report": not rep})
+    return {"generated_at": now, "date": d, "early_label_games": n_label, "games": games}
+
+
+def live_files(model: dict) -> None:
+    """data/live/: model.json (always), polymarket.json (public API; GitHub Actions refreshes it hourly),
+    consensus.json (aggregates of the books we fetch — computed by the private market module when present)."""
+    _write("live/model.json", model)
+    try:
+        import polymarket_live
+        _write("live/polymarket.json", polymarket_live.fetch(model))
+    except Exception as e:                       # the site shows the column as unavailable
+        print(f"  polymarket: {type(e).__name__}: {e}")
+    try:
+        from odds import live_compare            # private repo only
+    except ImportError:
+        return
+    _write("live/consensus.json", live_compare.public_consensus(model["games"]))
 
 
 def season(snaps) -> dict:
@@ -216,7 +240,7 @@ def title_odds(snaps) -> dict:
 def check_public(out: Path = OUT) -> None:
     """Refuse to publish if any exported file names a bookmaker."""
     import public_guard
-    bad = sorted(f.name for f in out.glob("*.json") if public_guard.bookmaker_tokens(f.read_text()))
+    bad = sorted(str(f.relative_to(out)) for f in out.rglob("*.json") if public_guard.bookmaker_tokens(f.read_text()))
     if bad:
         raise RuntimeError(f"bookmaker data in site export: {bad}")
 
@@ -235,7 +259,8 @@ def main() -> int:
     meta = {"generated_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "model": "Elo walk + player-availability layer (v3)", "season": "2026-27"}
     _write("meta.json", meta)
-    _write("today.json", today(snaps))
+    live_files(today())
+    (OUT / "today.json").unlink(missing_ok=True)         # replaced by live/model.json
     _write("season.json", season(snaps))
     _write("calibration.json", calibration())
     _write("backtest.json", backtest())

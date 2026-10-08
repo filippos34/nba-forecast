@@ -14,7 +14,8 @@ DEFAULTS = {
     "availability": {},
     "spread": {},
     "ops": {"host": "laptop", "keep_awake": True, "disabled_jobs": []},
-    "site": {"deploy": False, "remote": "", "branch": "gh-pages", "url": "", "base": "/", "title_odds": False},
+    "site": {"deploy": False, "remote": "", "branch": "gh-pages", "url": "", "base": "/", "title_odds": False,
+             "early_label_games": 10, "consensus_exclude": [], "live_hours_utc": [14, 4]},
 }
 try:                                   # parked market/staking settings: private module, absent in the public repo
     from private_defaults import DEFAULTS as _PRIVATE

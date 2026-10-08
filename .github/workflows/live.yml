@@ -1,0 +1,71 @@
+name: live
+# Assembles the deployed site: static build (gh-pages) + model/consensus JSON (live-data, pushed hourly by the
+# maintainer's machine, aggregates only) + Polymarket midpoints fetched here. Hourly on game days 14:00–04:00 UTC.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  push:
+    branches: [gh-pages, live-data]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with: { path: main }
+      - uses: actions/checkout@v4
+        with: { ref: gh-pages, path: _site }
+      - uses: actions/checkout@v4
+        continue-on-error: true
+        with: { ref: live-data, path: live }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.14" }
+      - name: Merge live data
+        run: |
+          rm -rf _site/.git
+          mkdir -p _site/data/live
+          if [ -d live/data/live ]; then cp live/data/live/*.json _site/data/live/; fi
+      - name: Game-day window (scheduled runs only)
+        id: window
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+          from datetime import datetime, timezone
+          from zoneinfo import ZoneInfo
+          now = datetime.now(timezone.utc)
+          if os.environ["EVENT"] != "schedule":
+              print("go=true"); raise SystemExit
+          try:
+              m = json.load(open("_site/data/live/model.json"))
+          except Exception:
+              print("go=false"); raise SystemExit
+          today_et = now.astimezone(ZoneInfo("America/New_York")).strftime("%Y-%m-%d")
+          in_hours = now.hour >= 14 or now.hour < 4
+          print(f"go={'true' if in_hours and m.get('date') == today_et and m.get('games') else 'false'}")
+          PY
+        env: { EVENT: "${{ github.event_name }}" }
+      - name: Polymarket midpoints
+        if: steps.window.outputs.go == 'true'
+        continue-on-error: true
+        run: |
+          pip install -q requests
+          python3 main/src/polymarket_live.py --model _site/data/live/model.json --out _site/data/live/polymarket.json
+      - name: Public guard (no bookmaker names in the deployed site)
+        if: steps.window.outputs.go == 'true'
+        run: PYTHONPATH=main/src python3 -m public_guard --names-only _site
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.window.outputs.go == 'true'
+        with: { path: _site }
+      - id: deployment
+        if: steps.window.outputs.go == 'true'
+        uses: actions/deploy-pages@v4
