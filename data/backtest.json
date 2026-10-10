@@ -1,0 +1,46 @@
+{
+ "rows": [
+  {
+   "season": "2024-25",
+   "model": "Model (v3)",
+   "n": 1231,
+   "brier": 0.2066,
+   "logloss": 0.5992,
+   "acc": 0.6726
+  },
+  {
+   "season": "2024-25",
+   "model": "Baseline Elo",
+   "n": 1231,
+   "brier": 0.2104,
+   "logloss": 0.6079,
+   "acc": 0.6718
+  },
+  {
+   "season": "2025-26",
+   "model": "Model (v3)",
+   "n": 1231,
+   "brier": 0.2027,
+   "logloss": 0.589,
+   "acc": 0.6889
+  },
+  {
+   "season": "2025-26",
+   "model": "Baseline Elo",
+   "n": 1231,
+   "brier": 0.2053,
+   "logloss": 0.597,
+   "acc": 0.6848
+  }
+ ],
+ "market_aggregate": {
+  "note": "Aggregate Brier on 2025-26 games with a sportsbook line (n=974); source: reports/shrink_weight.json",
+  "n_games": 974,
+  "brier": {
+   "model": 0.2033,
+   "baseline_elo": 0.2059,
+   "book_open": 0.1998,
+   "book_close": 0.1948
+  }
+ }
+}
