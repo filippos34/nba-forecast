@@ -1,0 +1,54 @@
+{
+ "games": [
+  {
+   "game_id": 401909088,
+   "date": "2026-10-20",
+   "home": "DET",
+   "away": "BOS",
+   "home_win": 1,
+   "model": 0.4628,
+   "baseline_elo": 0.5336,
+   "polymarket": 0.465,
+   "brier_model": 0.28858384,
+   "ll_model": 0.7704602837,
+   "brier_baseline_elo": 0.21752896,
+   "ll_baseline_elo": 0.6281087844,
+   "brier_polymarket": 0.286225,
+   "ll_polymarket": 0.7657178734
+  },
+  {
+   "game_id": 401909089,
+   "date": "2026-10-20",
+   "home": "NY",
+   "away": "PHI",
+   "home_win": 0,
+   "model": 0.4662,
+   "baseline_elo": 0.6723,
+   "polymarket": 0.615,
+   "brier_model": 0.25296314,
+   "ll_model": 0.6990971628,
+   "brier_baseline_elo": 0.334758125,
+   "ll_baseline_elo": 0.8718827538,
+   "brier_polymarket": 0.332225,
+   "ll_polymarket": 0.860114909
+  },
+  {
+   "game_id": 401909090,
+   "date": "2026-10-20",
+   "home": "SA",
+   "away": "OKC",
+   "home_win": 0,
+   "model": 0.597,
+   "baseline_elo": 0.5952,
+   "polymarket": 0.495,
+   "brier_model": 0.2874450933,
+   "ll_model": 0.7690043476,
+   "brier_baseline_elo": 0.3412597633,
+   "ll_baseline_elo": 0.8827092229,
+   "brier_polymarket": 0.3031583333,
+   "ll_polymarket": 0.8011422226
+  }
+ ],
+ "n": 3,
+ "note": "Each forecast is the last one logged before tip-off; Polymarket = de-vigged executable prices at the last snapshot before tip."
+}
