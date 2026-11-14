@@ -1,0 +1,260 @@
+{
+ "generated_at": "2026-11-14T11:01:55+00:00",
+ "date": "2026-11-14",
+ "early_label_games": 10,
+ "games": [
+  {
+   "game_id": 401909980,
+   "tip_utc": "2026-11-15T00:00:00Z",
+   "home": "NO",
+   "away": "DEN",
+   "neutral": false,
+   "model_p_home": 0.1233,
+   "model_spread_home": 15.8,
+   "model_as_of": "2026-11-14T11:01:55+00:00",
+   "injury_report_at": "2026-11-14T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "DEN",
+     "player": "Ryan Nembhard",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 23.2
+    },
+    {
+     "team": "DEN",
+     "player": "Cam Whitmore",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 17.2
+    },
+    {
+     "team": "DEN",
+     "player": "Julian Strawther",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 16.3
+    },
+    {
+     "team": "DEN",
+     "player": "DaRon Holmes II",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 3.1
+    }
+   ],
+   "home_games": 13,
+   "away_games": 10,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401909981,
+   "tip_utc": "2026-11-15T00:30:00Z",
+   "home": "CLE",
+   "away": "DAL",
+   "neutral": false,
+   "model_p_home": 0.6657,
+   "model_spread_home": -5.8,
+   "model_as_of": "2026-11-14T11:01:55+00:00",
+   "injury_report_at": "2026-11-14T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "DAL",
+     "player": "Max Christie",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 27.1
+    },
+    {
+     "team": "DAL",
+     "player": "Caleb Martin",
+     "status": "Available",
+     "p_plays": 0.79,
+     "proj_min": 18.0
+    },
+    {
+     "team": "DAL",
+     "player": "Dereck Lively II",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 17.1
+    },
+    {
+     "team": "DAL",
+     "player": "Tarik Biberovic",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "DAL",
+     "player": "Sergio de Larrea",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 13,
+   "away_games": 12,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401909982,
+   "tip_utc": "2026-11-15T01:00:00Z",
+   "home": "MIA",
+   "away": "DET",
+   "neutral": false,
+   "model_p_home": 0.3986,
+   "model_spread_home": 3.5,
+   "model_as_of": "2026-11-14T11:01:55+00:00",
+   "injury_report_at": "2026-11-14T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "DET",
+     "player": "Elijah Harkless",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 31.0
+    },
+    {
+     "team": "DET",
+     "player": "Jalen Duren",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 29.9
+    },
+    {
+     "team": "DET",
+     "player": "Isaiah Joe",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 10.8
+    },
+    {
+     "team": "DET",
+     "player": "Chaz Lanier",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 5.4
+    },
+    {
+     "team": "DET",
+     "player": "Isaac Jones",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 5.2
+    },
+    {
+     "team": "DET",
+     "player": "Ebuka Okorie",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "DET",
+     "player": "Ugonna Onyenso",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 12,
+   "away_games": 11,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401909983,
+   "tip_utc": "2026-11-15T01:00:00Z",
+   "home": "MEM",
+   "away": "BKN",
+   "neutral": false,
+   "model_p_home": 0.4986,
+   "model_spread_home": 0.0,
+   "model_as_of": "2026-11-14T11:01:55+00:00",
+   "injury_report_at": "2026-11-14T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "BKN",
+     "player": "Ben Saraf",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 27.3
+    },
+    {
+     "team": "BKN",
+     "player": "Nolan Traore",
+     "status": "Probable",
+     "p_plays": 0.93,
+     "proj_min": 22.7
+    },
+    {
+     "team": "BKN",
+     "player": "Grant Nelson",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 8.8
+    },
+    {
+     "team": "BKN",
+     "player": "Tyler Bilodeau",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "BKN",
+     "player": "Joshua Jefferson",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 12,
+   "away_games": 11,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401909984,
+   "tip_utc": "2026-11-15T01:00:00Z",
+   "home": "MIN",
+   "away": "CHI",
+   "neutral": false,
+   "model_p_home": 0.7505,
+   "model_spread_home": -9.2,
+   "model_as_of": "2026-11-14T11:01:55+00:00",
+   "injury_report_at": "2026-11-14T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "MIN",
+     "player": "Anthony Edwards",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 32.5
+    },
+    {
+     "team": "MIN",
+     "player": "Donte DiVincenzo",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.1
+    },
+    {
+     "team": "MIN",
+     "player": "Joan Beringer",
+     "status": "Available",
+     "p_plays": 0.79,
+     "proj_min": 10.9
+    }
+   ],
+   "home_games": 12,
+   "away_games": 11,
+   "early_estimate": false,
+   "pre_report": false
+  }
+ ]
+}
