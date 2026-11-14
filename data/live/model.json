@@ -1,0 +1,236 @@
+{
+ "generated_at": "2026-11-14T03:25:23+00:00",
+ "date": "2026-11-13",
+ "early_label_games": 10,
+ "games": [
+  {
+   "game_id": 401909296,
+   "tip_utc": "2026-11-14T00:00:00Z",
+   "home": "IND",
+   "away": "NY",
+   "neutral": false,
+   "model_p_home": 0.3981,
+   "model_spread_home": 3.5,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 12,
+   "away_games": 11,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909297,
+   "tip_utc": "2026-11-14T00:00:00Z",
+   "home": "ORL",
+   "away": "MIL",
+   "neutral": false,
+   "model_p_home": 0.7501,
+   "model_spread_home": -9.2,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 11,
+   "away_games": 12,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909298,
+   "tip_utc": "2026-11-14T01:00:00Z",
+   "home": "MIA",
+   "away": "CLE",
+   "neutral": false,
+   "model_p_home": 0.499,
+   "model_spread_home": 0.0,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 11,
+   "away_games": 12,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909299,
+   "tip_utc": "2026-11-14T01:00:00Z",
+   "home": "CHI",
+   "away": "ATL",
+   "neutral": false,
+   "model_p_home": 0.3786,
+   "model_spread_home": 4.2,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 10,
+   "away_games": 12,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909300,
+   "tip_utc": "2026-11-14T01:00:00Z",
+   "home": "NO",
+   "away": "MEM",
+   "neutral": false,
+   "model_p_home": 0.6875,
+   "model_spread_home": -6.6,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 12,
+   "away_games": 11,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909301,
+   "tip_utc": "2026-11-14T01:30:00Z",
+   "home": "HOU",
+   "away": "UTAH",
+   "neutral": false,
+   "model_p_home": 0.8755,
+   "model_spread_home": -15.7,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 12,
+   "away_games": 12,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909302,
+   "tip_utc": "2026-11-14T02:30:00Z",
+   "home": "SA",
+   "away": "GS",
+   "neutral": false,
+   "model_p_home": 0.7781,
+   "model_spread_home": -10.4,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 12,
+   "away_games": 12,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909303,
+   "tip_utc": "2026-11-14T03:00:00Z",
+   "home": "SAC",
+   "away": "POR",
+   "neutral": false,
+   "model_p_home": 0.2017,
+   "model_spread_home": 11.4,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": null,
+   "injuries": [],
+   "home_games": 11,
+   "away_games": 11,
+   "early_estimate": false,
+   "pre_report": true
+  },
+  {
+   "game_id": 401909304,
+   "tip_utc": "2026-11-14T03:30:00Z",
+   "home": "LAC",
+   "away": "OKC",
+   "neutral": false,
+   "model_p_home": 0.2993,
+   "model_spread_home": 7.2,
+   "model_as_of": "2026-11-14T03:25:23+00:00",
+   "injury_report_at": "2026-11-14T02:30:00+00:00",
+   "injuries": [
+    {
+     "team": "LAC",
+     "player": "Brandon Ingram",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 31.5
+    },
+    {
+     "team": "LAC",
+     "player": "Bradley Beal",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.8
+    },
+    {
+     "team": "LAC",
+     "player": "Jordan Miller",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 23.3
+    },
+    {
+     "team": "LAC",
+     "player": "Yanic Konan Niederhauser",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 15.7
+    },
+    {
+     "team": "LAC",
+     "player": "Nick Martinelli",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "OKC",
+     "player": "Chet Holmgren",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 30.8
+    },
+    {
+     "team": "OKC",
+     "player": "Ajay Mitchell",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 29.5
+    },
+    {
+     "team": "OKC",
+     "player": "Cason Wallace",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 26.4
+    },
+    {
+     "team": "OKC",
+     "player": "Jalen Williams",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.3
+    },
+    {
+     "team": "OKC",
+     "player": "Jaylin Williams",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 17.1
+    },
+    {
+     "team": "OKC",
+     "player": "Nikola Topic",
+     "status": "Available",
+     "p_plays": 0.79,
+     "proj_min": 6.1
+    },
+    {
+     "team": "OKC",
+     "player": "Thomas Sorber",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 10,
+   "away_games": 12,
+   "early_estimate": false,
+   "pre_report": false
+  }
+ ]
+}
