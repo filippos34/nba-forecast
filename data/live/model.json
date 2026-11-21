@@ -1,0 +1,466 @@
+{
+ "generated_at": "2026-11-21T11:00:19+00:00",
+ "date": "2026-11-21",
+ "early_label_games": 10,
+ "games": [
+  {
+   "game_id": 401910023,
+   "tip_utc": "2026-11-21T18:00:00Z",
+   "home": "PHI",
+   "away": "MIL",
+   "neutral": false,
+   "model_p_home": 0.7708,
+   "model_spread_home": -10.1,
+   "model_as_of": "2026-11-21T11:00:19+00:00",
+   "injury_report_at": "2026-11-21T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "PHI",
+     "player": "Tyrese Maxey",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 40.1
+    },
+    {
+     "team": "PHI",
+     "player": "Jaylen Brown",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 35.5
+    },
+    {
+     "team": "PHI",
+     "player": "Dean Wade",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 20.8
+    },
+    {
+     "team": "PHI",
+     "player": "Adem Bona",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 11.1
+    },
+    {
+     "team": "PHI",
+     "player": "Dominick Barlow",
+     "status": "Probable",
+     "p_plays": 0.93,
+     "proj_min": 10.7
+    },
+    {
+     "team": "PHI",
+     "player": "Ariel Hukporti",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 7.5
+    },
+    {
+     "team": "MIL",
+     "player": "Ousmane Dieng",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 32.4
+    },
+    {
+     "team": "MIL",
+     "player": "Kam Jones",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 18.0
+    },
+    {
+     "team": "MIL",
+     "player": "Bogoljub Markovic",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 16,
+   "away_games": 16,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910024,
+   "tip_utc": "2026-11-22T00:30:00Z",
+   "home": "NY",
+   "away": "POR",
+   "neutral": false,
+   "model_p_home": 0.5989,
+   "model_spread_home": -3.4,
+   "model_as_of": "2026-11-21T11:00:19+00:00",
+   "injury_report_at": "2026-11-21T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "NY",
+     "player": "OG Anunoby",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 34.1
+    },
+    {
+     "team": "NY",
+     "player": "Jordan Clarkson",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 8.6
+    },
+    {
+     "team": "POR",
+     "player": "Deni Avdija",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 35.9
+    },
+    {
+     "team": "POR",
+     "player": "Ja Morant",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 26.1
+    },
+    {
+     "team": "POR",
+     "player": "Shaedon Sharpe",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 16.6
+    },
+    {
+     "team": "POR",
+     "player": "Branden Carlson",
+     "status": "Available",
+     "p_plays": 0.79,
+     "proj_min": 13.7
+    },
+    {
+     "team": "POR",
+     "player": "Vit Krejci",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 10.4
+    },
+    {
+     "team": "POR",
+     "player": "Chris Youngblood",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 6.2
+    }
+   ],
+   "home_games": 15,
+   "away_games": 15,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910025,
+   "tip_utc": "2026-11-22T01:00:00Z",
+   "home": "DAL",
+   "away": "LAC",
+   "neutral": false,
+   "model_p_home": 0.5963,
+   "model_spread_home": -3.3,
+   "model_as_of": "2026-11-21T11:00:19+00:00",
+   "injury_report_at": "2026-11-21T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "DAL",
+     "player": "P.J. Washington",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 31.4
+    },
+    {
+     "team": "DAL",
+     "player": "Walter Clayton Jr.",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 25.0
+    },
+    {
+     "team": "DAL",
+     "player": "Caleb Martin",
+     "status": "Available",
+     "p_plays": 0.79,
+     "proj_min": 18.0
+    },
+    {
+     "team": "DAL",
+     "player": "Dereck Lively II",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 17.1
+    },
+    {
+     "team": "DAL",
+     "player": "Jett Howard",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 10.5
+    },
+    {
+     "team": "DAL",
+     "player": "Tarik Biberovic",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "DAL",
+     "player": "Sergio de Larrea",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "DAL",
+     "player": "Tobi Lawal",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "LAC",
+     "player": "Brandon Ingram",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 31.5
+    },
+    {
+     "team": "LAC",
+     "player": "Bradley Beal",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.8
+    },
+    {
+     "team": "LAC",
+     "player": "Jordan Miller",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 23.3
+    },
+    {
+     "team": "LAC",
+     "player": "Jalen Pickett",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 9.8
+    },
+    {
+     "team": "LAC",
+     "player": "Nick Martinelli",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 15,
+   "away_games": 14,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910026,
+   "tip_utc": "2026-11-22T01:00:00Z",
+   "home": "MIN",
+   "away": "MEM",
+   "neutral": false,
+   "model_p_home": 0.7399,
+   "model_spread_home": -8.7,
+   "model_as_of": "2026-11-21T11:00:19+00:00",
+   "injury_report_at": "2026-11-21T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "MIN",
+     "player": "Anthony Edwards",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 32.5
+    },
+    {
+     "team": "MIN",
+     "player": "Donte DiVincenzo",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.1
+    },
+    {
+     "team": "MIN",
+     "player": "Jaylen Clark",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 14.9
+    },
+    {
+     "team": "MIN",
+     "player": "Joan Beringer",
+     "status": "Available",
+     "p_plays": 0.79,
+     "proj_min": 10.9
+    },
+    {
+     "team": "MIN",
+     "player": "Rocco Zikarsky",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 7.4
+    },
+    {
+     "team": "MEM",
+     "player": "GG Jackson",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 25.1
+    },
+    {
+     "team": "MEM",
+     "player": "Jerami Grant",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.8
+    },
+    {
+     "team": "MEM",
+     "player": "Javon Small",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.6
+    },
+    {
+     "team": "MEM",
+     "player": "Ty Jerome",
+     "status": "Probable",
+     "p_plays": 0.93,
+     "proj_min": 24.0
+    },
+    {
+     "team": "MEM",
+     "player": "Scotty Pippen Jr.",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 21.2
+    },
+    {
+     "team": "MEM",
+     "player": "Cameron Boozer",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "MEM",
+     "player": "Richie Saunders",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 16,
+   "away_games": 16,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910027,
+   "tip_utc": "2026-11-22T01:00:00Z",
+   "home": "SA",
+   "away": "NO",
+   "neutral": false,
+   "model_p_home": 0.8886,
+   "model_spread_home": -16.6,
+   "model_as_of": "2026-11-21T11:00:19+00:00",
+   "injury_report_at": "2026-11-21T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "SA",
+     "player": "Tobias Harris",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 34.3
+    },
+    {
+     "team": "SA",
+     "player": "Dylan Harper",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 26.7
+    },
+    {
+     "team": "SA",
+     "player": "Maliq Brown",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "SA",
+     "player": "Ja'Kobi Gillespie",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "SA",
+     "player": "Jayden Quaintance",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 16,
+   "away_games": 17,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910028,
+   "tip_utc": "2026-11-22T03:00:00Z",
+   "home": "SAC",
+   "away": "BOS",
+   "neutral": false,
+   "model_p_home": 0.1137,
+   "model_spread_home": 16.4,
+   "model_as_of": "2026-11-21T11:00:19+00:00",
+   "injury_report_at": "2026-11-21T11:00:00+00:00",
+   "injuries": [
+    {
+     "team": "BOS",
+     "player": "Jayson Tatum",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 36.2
+    },
+    {
+     "team": "BOS",
+     "player": "Derrick White",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 34.3
+    },
+    {
+     "team": "BOS",
+     "player": "Amari Williams",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 4.1
+    },
+    {
+     "team": "BOS",
+     "player": "Dillon Mitchell",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 15,
+   "away_games": 15,
+   "early_estimate": false,
+   "pre_report": false
+  }
+ ]
+}
