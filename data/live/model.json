@@ -1,0 +1,344 @@
+{
+ "generated_at": "2026-11-28T15:05:48+00:00",
+ "date": "2026-11-28",
+ "early_label_games": 10,
+ "games": [
+  {
+   "game_id": 401910046,
+   "tip_utc": "2026-11-28T22:00:00Z",
+   "home": "WSH",
+   "away": "ORL",
+   "neutral": false,
+   "model_p_home": 0.4299,
+   "model_spread_home": 2.4,
+   "model_as_of": "2026-11-28T15:05:48+00:00",
+   "injury_report_at": "2026-11-28T15:00:00+00:00",
+   "injuries": [
+    {
+     "team": "WSH",
+     "player": "Jamir Watkins",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.7
+    },
+    {
+     "team": "WSH",
+     "player": "Justin Champagnie",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.0
+    },
+    {
+     "team": "WSH",
+     "player": "Reece Beekman",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 20.7
+    },
+    {
+     "team": "WSH",
+     "player": "Tristan Vukcevic",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 17.5
+    },
+    {
+     "team": "WSH",
+     "player": "Felix Okpara",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "ORL",
+     "player": "Paolo Banchero",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 38.0
+    },
+    {
+     "team": "ORL",
+     "player": "Kevin Porter Jr.",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 31.9
+    },
+    {
+     "team": "ORL",
+     "player": "Anthony Black",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 26.4
+    },
+    {
+     "team": "ORL",
+     "player": "Colin Castleton",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 14.7
+    },
+    {
+     "team": "ORL",
+     "player": "Jonathan Isaac",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 8.8
+    },
+    {
+     "team": "ORL",
+     "player": "Noah Penda",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 6.1
+    },
+    {
+     "team": "ORL",
+     "player": "Izaiyah Nelson",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 19,
+   "away_games": 17,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910047,
+   "tip_utc": "2026-11-28T23:00:00Z",
+   "home": "CHA",
+   "away": "BKN",
+   "neutral": false,
+   "model_p_home": 0.8328,
+   "model_spread_home": -13.1,
+   "model_as_of": "2026-11-28T15:05:48+00:00",
+   "injury_report_at": "2026-11-28T15:00:00+00:00",
+   "injuries": [
+    {
+     "team": "CHA",
+     "player": "Kon Knueppel",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 30.9
+    },
+    {
+     "team": "CHA",
+     "player": "Grayson Allen",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 21.6
+    },
+    {
+     "team": "CHA",
+     "player": "Ryan Kalkbrenner",
+     "status": "Probable",
+     "p_plays": 0.93,
+     "proj_min": 18.5
+    },
+    {
+     "team": "CHA",
+     "player": "Dennis Schroder",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 17.3
+    },
+    {
+     "team": "CHA",
+     "player": "PJ Hall",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 16.3
+    },
+    {
+     "team": "CHA",
+     "player": "Michael Ajayi",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "CHA",
+     "player": "Kylan Boswell",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 17,
+   "away_games": 18,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910048,
+   "tip_utc": "2026-11-29T01:00:00Z",
+   "home": "CHI",
+   "away": "IND",
+   "neutral": false,
+   "model_p_home": 0.5702,
+   "model_spread_home": -2.4,
+   "model_as_of": "2026-11-28T15:05:48+00:00",
+   "injury_report_at": "2026-11-28T15:00:00+00:00",
+   "injuries": [
+    {
+     "team": "CHI",
+     "player": "Norman Powell",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 26.7
+    },
+    {
+     "team": "CHI",
+     "player": "Jalen Smith",
+     "status": "Probable",
+     "p_plays": 0.93,
+     "proj_min": 22.7
+    },
+    {
+     "team": "CHI",
+     "player": "Noa Essengue",
+     "status": "Probable",
+     "p_plays": 0.93,
+     "proj_min": 3.0
+    },
+    {
+     "team": "CHI",
+     "player": "Tobe Awaka",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "CHI",
+     "player": "Jaylin Sellers",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "CHI",
+     "player": "Dailyn Swain",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "CHI",
+     "player": "Caleb Wilson",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 18,
+   "away_games": 19,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910049,
+   "tip_utc": "2026-11-29T01:00:00Z",
+   "home": "MIL",
+   "away": "OKC",
+   "neutral": false,
+   "model_p_home": 0.1677,
+   "model_spread_home": 13.1,
+   "model_as_of": "2026-11-28T15:05:48+00:00",
+   "injury_report_at": "2026-11-28T15:00:00+00:00",
+   "injuries": [
+    {
+     "team": "OKC",
+     "player": "Chet Holmgren",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 30.8
+    },
+    {
+     "team": "OKC",
+     "player": "Cason Wallace",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 26.4
+    },
+    {
+     "team": "OKC",
+     "player": "Jalen Williams",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 24.3
+    },
+    {
+     "team": "OKC",
+     "player": "Jaylin Williams",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 17.1
+    },
+    {
+     "team": "OKC",
+     "player": "Nikola Topic",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 6.1
+    },
+    {
+     "team": "OKC",
+     "player": "Aday Mara",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    },
+    {
+     "team": "OKC",
+     "player": "Thomas Sorber",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 20,
+   "away_games": 19,
+   "early_estimate": false,
+   "pre_report": false
+  },
+  {
+   "game_id": 401910050,
+   "tip_utc": "2026-11-29T01:30:00Z",
+   "home": "HOU",
+   "away": "PHI",
+   "neutral": false,
+   "model_p_home": 0.8163,
+   "model_spread_home": -12.3,
+   "model_as_of": "2026-11-28T15:05:48+00:00",
+   "injury_report_at": "2026-11-28T15:00:00+00:00",
+   "injuries": [
+    {
+     "team": "HOU",
+     "player": "Steven Adams",
+     "status": "Questionable",
+     "p_plays": 0.54,
+     "proj_min": 25.8
+    },
+    {
+     "team": "HOU",
+     "player": "Julian Phillips",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 8.7
+    },
+    {
+     "team": "HOU",
+     "player": "Quadir Copeland",
+     "status": "Out",
+     "p_plays": 0.0,
+     "proj_min": 0.0
+    }
+   ],
+   "home_games": 19,
+   "away_games": 20,
+   "early_estimate": false,
+   "pre_report": false
+  }
+ ]
+}
